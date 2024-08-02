@@ -13,12 +13,15 @@ import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/jwt/jwt.guard';
-
+import { RolesGuard } from 'src/auth/local/roles.guard';
+import {Roles} from 'src/auth/local/roles.decorator';
+import {Role} from 'src/enum/role.enum';
 @Controller('user') //route group
 export class UserController {
   constructor(
     private readonly userService: UserService,
   ) {}
+  
   @UseGuards(JwtAuthGuard)
   @Post()
   async create(
@@ -40,7 +43,9 @@ export class UserController {
       };
     }
   }
-  @UseGuards(JwtAuthGuard)
+  @Roles(Role.Admin)
+  @UseGuards(JwtAuthGuard,RolesGuard)
+
   @Get()
   async findAll() {
     try {

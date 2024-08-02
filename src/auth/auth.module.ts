@@ -17,11 +17,10 @@ import { RefreshJwtStrategy } from './jwt/refresh.strategy';
   imports: [
     UserModule,
     PassportModule,
-  
     TypeOrmModule.forFeature([UserEntity]),
     JwtModule.register({
       secret: 'testtest',
-      signOptions: { expiresIn: '180s' },
+      signOptions: { expiresIn: '3600s' },
     }),
   ],
   providers: [AuthService, LocalStrategy,JwtStrategy,UserService,RefreshJwtStrategy],

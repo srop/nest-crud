@@ -21,13 +21,15 @@ export class AuthService {
     const user = await this.userService.findOneUsername(username);
     if (user && (await bcrypt.compare(pass, user.password))) {
       const { password, ...result } = user;
+
+  
       return result;
     }
     return null;
   }
   async login(user: any) {
-    const payload = { username: user.username, sub: user.id };
-    console.log('payload', payload);
+    const payload = { username: user.username, sub: user.id , roles:user.roles };
+
     return {
       access_token: this.jwtService.sign(payload),
       refresh_token: this.jwtService.sign(payload, {
@@ -37,8 +39,8 @@ export class AuthService {
   }
 
   async refreshToken(user: any) {
-    const payload = { username: user.username, sub: user.id };
-    console.log('payload', payload);
+    const payload = { username: user.username, sub: user.id, roles:user.roles };
+   
     return {
       access_token: this.jwtService.sign(payload),
       

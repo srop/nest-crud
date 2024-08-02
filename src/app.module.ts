@@ -9,6 +9,8 @@ import { AuthModule } from './auth/auth.module';
 import { TaskModule } from './task/task.module';
 import { LoggerMiddleware } from './logger.middleware';
 import { UserController } from './user/user.controller';
+import { APP_GUARD } from '@nestjs/core';
+import { RolesGuard } from './auth/local/roles.guard';
 @Module({
   
   imports: [
